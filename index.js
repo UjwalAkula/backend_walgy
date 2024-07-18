@@ -9,7 +9,7 @@ const productRoutes=require('./routes/productRoutes')
 
 const app=express()
 
-const port=4000
+const port=proces.env.port || 4000;
 
 dotEnv.config()
 
