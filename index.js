@@ -3,11 +3,13 @@ const mongoose=require('mongoose')
 const dotEnv=require('dotenv')
 const bodyParser=require('body-parser')
 const path=require('path');
+const cors=require('cors');
 const vendorRoutes=require('./routes/vendorRoutes')
 const firmRoutes=require('./routes/firmRoutes')
 const productRoutes=require('./routes/productRoutes')
 
 const app=express()
+app.use(cors())
 
 const port=process.env.port || 4000;
 
