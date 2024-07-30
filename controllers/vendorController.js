@@ -1,4 +1,5 @@
 const Vendor=require('../models/Vendor')
+const Firm=require('../models/Firm')
 const jwt=require('jsonwebtoken')
 const bcrypt=require('bcryptjs')
 const dotEnv=require('dotenv')
@@ -39,7 +40,9 @@ const vendorLogin=async(req,res)=>{
         }
         const token=jwt.sign({vendorId:vendor._id},secretKey,{expiresIn:"1h"})
 
-        res.status(200).json({success:"Login Successful",token})
+
+        const vendorId=vendor._id
+        res.status(200).json({success:"Login Successful",vendorId,token})
         console.log(email,"The token is:",token)
     }catch(error){
         res.status(500).json({Error:"Internal server error"})
@@ -67,8 +70,18 @@ const getvendorById=async(req,res)=>{
             return res.status(404).json("vendor not found");
         }
 
-        res.status(200).json({vendor})
-    }catch(error){
+        const vendorUsername=vendor.username;
+
+        if (vendor.firms.length > 0){
+            const vendorFirmId=vendor.firms[0]._id;
+            const Firmname=vendor.firms[0].firmName;
+            console.log(Firmname)
+            res.status(200).json({vendorUsername,vendorFirmId,Firmname})
+        }else{
+            res.status(200).json({massege:"vendor has NO firms",vendorUsername})
+        }
+        
+      }catch(error){
         console.log("the error is:",error);
         res.status(500).json({Error:"Internal Server Error"});
     }

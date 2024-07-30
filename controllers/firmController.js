@@ -26,21 +26,27 @@ const addFirm=async(req,res)=>{
 
         if(!vendor){
             return res.status(404).json({message:"vendor not found"})
-    }
+        }
+        if(vendor.firms.length > 0){
+            return res.status(404).json({message:"Vendor sould have only one firm"})
+        } 
 
-    const firm=new Firm({
-        firmName,area,category,region,offer,image,vendor:vendor._id
-    })
+        const firm=new Firm({
+            firmName,area,category,region,offer,image,vendor:vendor._id
+        })
 
-    await firm.save()
+        await firm.save()
 
-    /*vendor.firms.push(firm._id) means adding the _id of a firm document to an array named firms within a vendor document. */
+        /*vendor.firms.push(firm._id) means adding the _id of a firm document to an array named firms within a vendor document. */
 
-     // Update the vendor document with the new firm's ID
-     vendor.firms.push(firm._id); // Assuming 'firms' is an array in Vendor schema to store firm IDs
-     await vendor.save();
+        // Update the vendor document with the new firm's ID
+        vendor.firms.push(firm._id); // Assuming 'firms' is an array in Vendor schema to store firm IDs
+        await vendor.save();
 
-    return res.status(200).json({message:"Firm added successfully"})
+        const firm_id= firm._id;
+        const Firmname=firm.firmName
+
+        res.status(200).json({message:"Firm added successfully",firm_id,Firmname})
     }catch(error){
         console.log("The error is:",error)
         res.status(500).json("Insternal Server Error")

@@ -67,12 +67,23 @@ const getproductsByFirm=async(req,res)=>{
 const deleteProductById=async(req,res)=>{
     try{
         const productId=req.params.productId
+        const product=await Product.findById(productId)
+        const firmId=product.firm
+
+        const firm=await Firm.findById(firmId)
+        {/*const deleteproductIDInFirm=await firm.updateOne({products:productId},{$pull:{products:productId}})*/}
+        firm.products.pop(productId)
+        firm.save()
 
         const deleteproduct=await Product.findByIdAndDelete(productId);
 
         if(!deleteproduct){
             return res.status(404).json('No product found')
+        }else{
+            return res.status(200).json({message:'Product deleted'})
         }
+
+
     }catch(error){
         res.status(500).json("Insternal Server Error");
     }
