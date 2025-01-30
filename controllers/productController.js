@@ -43,7 +43,7 @@ const addProduct=async(req,res)=>{
 
     }catch(error){
         console.log("the error is:",error);
-        res.status(500).json("Insternal Server Error");
+        res.status(500).json("Internal Server Error");
     }
 };
 
@@ -57,8 +57,9 @@ const getproductsByFirm=async(req,res)=>{
         }
 
         const restaurantName=await firm.firmName;
+        const restaurantaddress=await firm.area;
         const products=await Product.find({firm:firmId});
-        res.status(200).json({restaurantName,products})
+        res.status(200).json({restaurantName,restaurantaddress,products})
     }catch(error){
         res.status(500).json("Insternal Server Error");
     }

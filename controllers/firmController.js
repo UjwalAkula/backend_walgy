@@ -67,4 +67,14 @@ const deleteFirmById=async(req,res)=>{
     }
 }
 
-module.exports={addFirm:[upload.single('image'),addFirm],deleteFirmById}
+const getFirms=async(req,res)=>{
+    try{
+        const allfirms=await Firm.find();
+
+        res.status(200).json(allfirms);
+    }catch(error){
+        res.status(500).json("Internal server Error");
+    }
+}
+
+module.exports={addFirm:[upload.single('image'),addFirm],deleteFirmById,getFirms}

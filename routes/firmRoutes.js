@@ -8,6 +8,8 @@ router.post('/add-firm',verifytoken,firmController.addFirm);
 
 router.delete('/:FirmId',firmController.deleteFirmById);
 
+router.get('/all-firms',firmController.getFirms)
+
 router.get('/uploads/:imageName',(req,res)=>{
     const imageName=req.params.imageName;
     res.headersSent('content-Type','image/jpeg');
