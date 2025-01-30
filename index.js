@@ -12,7 +12,7 @@ const app = express();
 app.use(cors());
 
 // Correct the port environment variable case
-const port = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4000;
 
 dotenv.config();
 
@@ -41,6 +41,6 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something went wrong!');
 });
 
-app.listen(port, () => {
+app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
