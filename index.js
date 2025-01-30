@@ -15,13 +15,13 @@ const port=process.env.port || 4000;
 
 dotEnv.config()
 
-mongoose.connect(process.env.mongodb_URI)
-.then(()=>{
-    console.log("MongoDB connected successfully")
-})
-.catch((error)=>{
-    console.log("The error with mongoose is:",error)
-})
+mongoose.connect(process.env.MONGODB_URL)
+  .then(() => {
+    console.log("MongoDB connected successfully");
+  })
+  .catch((error) => {
+    console.log("The error with mongoose is:", error);
+  });
 
 app.use(bodyParser.json())
 app.use('/vendor',vendorRoutes)
